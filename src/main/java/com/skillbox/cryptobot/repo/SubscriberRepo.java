@@ -13,7 +13,7 @@ import java.util.UUID;
 @Repository
 public interface SubscriberRepo extends JpaRepository<Subscriber, UUID> {
 
-    @Query("select s from Subscriber s where s.subscriberAmount >= ?1 and (s.lastNotification < ?2 or s.lastNotification is null)")
+    @Query("select s from Subscriber s where s.subscriberAmount is not null and s.subscriberAmount >= ?1 and (s.lastNotification < ?2 or s.lastNotification is null)")
     List<Subscriber> getNotificationSubscribers(Double subscriberAmount, LocalDateTime lastNotification);
 
     Optional<Subscriber> findByChatId(Long chatId);
