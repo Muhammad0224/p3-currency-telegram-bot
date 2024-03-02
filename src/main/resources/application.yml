@@ -2,12 +2,8 @@ telegram:
   bot:
 #    не вписывайте данные, так как можете отправить в публичный репозиторий
 #    используйте переменные среды для установки значений
-    username: p3_currency_telegram_bot
-    token: 6841633842:AAG7RMflgByFe89tDwbfA8MnJAluSPOULLg
-    notify:
-      delay:
-        value: 10
-        unit: MINUTES
+    username: botUsername
+    token: bot token
 
 binance:
   api:
@@ -23,5 +19,7 @@ spring:
       ddl-auto: update
 
 config:
-  min-time: 10
+  notify:
+    value: 10
+    unit: MINUTES
   refresh-time: "0 0/2 * * * ?"

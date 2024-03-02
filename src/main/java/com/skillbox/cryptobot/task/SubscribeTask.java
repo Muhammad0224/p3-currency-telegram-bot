@@ -14,6 +14,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
 
 @Service
@@ -25,15 +27,18 @@ public class SubscribeTask {
     private final SubscriberService subscriberService;
     private final CryptoBot bot;
 
-    @Value("${config.min-time}")
-    private Integer minTime;
+    @Value("${config.notify.value}")
+    private Integer notifyValue;
+
+    @Value("${config.notify.unit}")
+    private String notifyUnit;
 
     @Scheduled(cron = "${config.refresh-time}")
     public void subscribeTask() {
         try {
             double bitcoinPrice = cryptoCurrencyService.getBitcoinPrice();
 
-            LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(minTime);
+            LocalDateTime localDateTime = LocalDateTime.now().minus(notifyValue, ChronoUnit.valueOf(notifyUnit));
 
             List<Subscriber> subscribers = subscriberService.getSubscribers(bitcoinPrice, localDateTime);
             subscribers.forEach(subscriber -> {
